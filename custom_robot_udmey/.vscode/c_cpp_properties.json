@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/chandan/catkin_ws/devel/include",
+        "/opt/ros/melodic/include",
+        "/home/chandan/catkin_ws/src/custom_robot_udmey/include",
+        "/home/chandan/catkin_ws/src/learning_tf2/include",
+        "/home/chandan/catkin_ws/src/my_robot_tutorials_udmey/include",
+        "/home/chandan/catkin_ws/src/open_cv_udmey/include",
+        "/home/chandan/catkin_ws/src/pedsim_ros/3rdparty/libpedsim/include",
+        "/home/chandan/catkin_ws/src/pedsim_ros/pedsim_sensors/include",
+        "/home/chandan/catkin_ws/src/pedsim_ros/pedsim_simulator/include",
+        "/home/chandan/catkin_ws/src/pedsim_ros/pedsim_utils/include",
+        "/home/chandan/catkin_ws/src/pedsim_ros/pedsim_visualizer/include",
+        "/home/chandan/catkin_ws/src/turtlebot3_simulations/turtlebot3_fake/include",
+        "/home/chandan/catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}

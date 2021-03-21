@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="niryo_arm">
+<xacro:include filename="$(find custom_robot_udmey)/urdf/niryo_arm_param.urdf.xacro"/>
+
+<!-- roslaunch urdf_tutorial display.launch model:='$(find custom_robot_udmey)/urdf/niryo_arm_model.urdf.xacro'-->
+
+    <link name="world"/>
+    <!-- Base Link-->
+        <link name="base_link">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/collada/base_link.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/stl/base_link.stl"/>
+                </geometry>    
+            </collision>
+            <inertial>
+                <origin xyz="-0.00240796011216664 -0.00591764669105095 0.0515774030380053" rpy="0.0 0.0 0.0"/>
+                <mass value="0.999243361008122"/>
+                <inertia ixx="0.002" iyy="0.002" izz="0.004" ixy="0.0" ixz="0.0"  iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <joint name="joint_world" type="fixed">
+            <parent link="world"/>
+            <child link="base_link"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </joint>
+
+        <!-- Shoulder Link-->
+            <link name="shoulder_link">
+                <visual>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/collada/shoulder_link.dae"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/stl/shoulder_link.stl"/>
+                    </geometry>    
+                </collision>
+                <inertial>
+                    <origin xyz="-0.0307310771918448 0.00581074732334248 0.0302277607274943" rpy="0.0 0.0 0.0"/>
+                    <mass value="0.474558968160783"/>
+                    <inertia ixx="0.0015" iyy="0.0015" izz="0.0015" ixy="0.0" ixz="0.0"  iyz="0.0"/>
+                </inertial>
+            </link>
+
+        <joint name="joint_1" type="revolute">
+            <parent link="base_link"/>
+            <child link="shoulder_link"/>
+            <origin xyz="0.0 0.0 0.1065" rpy="0.0 0.0 0.0"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit effort="10" velocity="2.2" lower="${(limit_low_shoulder_rotation + safety_pos_margin) * deg_to_rad}" upper="${(limit_up_shoulder_rotation - safety_pos_margin) * deg_to_rad}" />
+        </joint>
+
+        
+        <!-- Arm Link-->
+            <link name="arm_link">
+                <visual>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/collada/arm_link.dae"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/stl/arm_link.stl"/>
+                    </geometry>    
+                </collision>
+                <inertial>
+                    <origin xyz="0.116485160625991 -0.00141190194997476 -0.00338105503061108" rpy="0.0 0.0 0.0"/>
+                    <mass value="0.513332159226246"/>
+                    <inertia ixx="0.0015" iyy="0.0015" izz="0.0015" ixy="0.0" ixz="0.0"  iyz="0.0"/>
+                </inertial>
+            </link>
+
+        <joint name="joint_2" type="revolute">
+            <parent link="shoulder_link"/>
+            <child link="arm_link"/>
+            <origin xyz="0.0 0.0 0.065" rpy="${PI/2} ${-PI/2} 0"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit effort="10" velocity="2.2" lower="${(limit_low_arm_rotation + safety_pos_margin) * deg_to_rad}" upper="${(limit_up_arm_rotation - safety_pos_margin) * deg_to_rad}" />
+        </joint>
+
+
+        <!-- Elbow Link-->
+            <link name="elbow_link">
+                <visual>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/collada/elbow_link.dae"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/stl/elbow_link.stl"/>
+                    </geometry>    
+                </collision>
+                <inertial>
+                    <origin xyz="0.00840548736069937 0.0235132719991579 0.00139784606943909" rpy="0.0 0.0 0.0"/>
+                    <mass value="0.201038841892435"/>
+                    <inertia ixx="0.0015" iyy="0.0015" izz="0.0015" ixy="0.0" ixz="0.0"  iyz="0.0"/>
+                </inertial>
+            </link>
+
+        <joint name="joint_3" type="revolute">
+            <parent link="arm_link"/>
+            <child link="elbow_link"/>
+            <origin xyz="0.221 -0.012 0.0" rpy="0 0 ${-PI/2}"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit effort="7" velocity="2.0" lower="${(limit_low_elbow_rotation + safety_pos_margin) * deg_to_rad}" upper="${(limit_up_elbow_rotation - safety_pos_margin) * deg_to_rad}" />
+        </joint>
+
+
+        <!-- forearm Link-->
+            <link name="forearm_link">
+                <visual>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/collada/forearm_link.dae"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/stl/forearm_link.stl"/>
+                    </geometry>    
+                </collision>
+                <inertial>
+                    <origin xyz="-0.00811345462189901 -0.000135618649565461 0.107402242790047" rpy="0.0 0.0 0.0"/>
+                    <mass value="0.203543862275952"/>
+                    <inertia ixx="0.0015" iyy="0.0015" izz="0.0015" ixy="0.0" ixz="0.0"  iyz="0.0"/>
+                </inertial>
+            </link>
+
+        <joint name="joint_4" type="revolute">
+            <parent link="elbow_link"/>
+            <child link="forearm_link"/>
+            <origin xyz="0.047 0.0325 0.0" rpy="0 0 ${-PI/2}"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit effort="7" velocity="2.0" lower="${(limit_low_forearm_rotation + safety_pos_margin) * deg_to_rad}" upper="${(limit_up_forearm_rotation - safety_pos_margin) * deg_to_rad}" />
+        </joint>
+
+
+        <!-- Wrist Link-->
+            <link name="wrist_link">
+                <visual>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/collada/wrist_link.dae"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/stl/wrist_link.stl"/>
+                    </geometry>    
+                </collision>
+                <inertial>
+                    <origin xyz="-0.0193227036920796 -0.00157014407079775 0.000275751023741896" rpy="0.0 0.0 0.0"/>
+                    <mass value="0.0403595377880338"/>
+                    <inertia ixx="0.0015" iyy="0.0015" izz="0.0015" ixy="0.0" ixz="0.0"  iyz="0.0"/>
+                </inertial>
+            </link>
+
+        <joint name="joint_5" type="revolute">
+            <parent link="forearm_link"/>
+            <child link="wrist_link"/>
+            <origin xyz="0.0 0.0 0.188" rpy="${PI} ${-PI/2} ${PI}"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit effort="6" velocity="2.0" lower="${(limit_low_wrist_rotation + safety_pos_margin) * deg_to_rad}" upper="${(limit_up_wrist_rotation - safety_pos_margin) * deg_to_rad}" />
+        </joint>
+
+
+
+        <!-- Hand Link-->
+            <link name="hand_link">
+                <visual>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/collada/hand_link.dae"/>
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <geometry>
+                        <mesh filename="package://custom_robot_udmey/urdf/meshes/ned/stl/hand_link.stl"/>
+                    </geometry>    
+                </collision>
+                <inertial>
+                    <origin xyz="5.84141230982198E-10 -1.35851692194544E-05 0.00881600136229516" rpy="0.0 0.0 0.0"/>
+                    <mass value="0.0148769800713074"/>
+                    <inertia ixx="0.0015" iyy="0.0015" izz="0.0015" ixy="0.0" ixz="0.0"  iyz="0.0"/>
+                </inertial>
+            </link>
+
+        <joint name="joint_6" type="revolute">
+            <parent link="wrist_link"/>
+            <child link="hand_link"/>
+            <origin xyz="0.0197 0.00925 0.0" rpy="0 ${PI/2} 0"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit effort="5" velocity="2.0" lower="${(limit_low_hand_rotation + safety_pos_margin) * deg_to_rad}" upper="${(limit_up_hand_rotation - safety_pos_margin) * deg_to_rad}" />
+        </joint>
+
+
+        <!-- Hand Link-->
+            <link name="tool_link">
+                
+            </link>
+        
+        <joint name="joint_7" type="fixed">
+            <parent link="hand_link"/>
+            <child link="tool_link"/>
+            <origin xyz="0.0 0.0 ${distance_hand_tool}" rpy="${-PI/2} ${-PI/2} 0"/>
+            <axis xyz="0.0 0.0 1.0"/>
+        </joint>    
+
+</robot>
