@@ -10,12 +10,12 @@
 
     <!-- Niryo_Transmission -->
     <xacro:include filename="$(find custom_robot_udmey)/urdf/niryo_arm.transmission.xacro"/>
-    <rosparam command="load" file="$(find custom_robot_udmey)/config/controller.yaml"/>
+    <!-- <rosparam command="load" file="$(find custom_robot_udmey)/config/controller.yaml"/> -->
     <!-- <node name= "controller_spawner" pkg= "controller_manager" type="spawner" args="arm_controller"/> -->
 
     <!-- start_controllers -->
-    <node name="joint_state_controller_spawner" pkg="controller_manager" type="spawner" args="arm_controller" respawn="false" />
-    <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" args="arm_controller" />
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" args="arm_controller"/>
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" args="arm_controller"/>
+    <!-- <node name="joint_state_controller_spawner" pkg="controller_manager" type="spawner" args="joint_state_controller" respawn="false" /> -->
+    <!-- <node name="arm_controller_spawner" pkg="controller_manager" type="spawner" args="arm_controller" /> -->
+    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" args="arm_controller"/> -->
+    <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" args="arm_controller"/> -->
 </robot>

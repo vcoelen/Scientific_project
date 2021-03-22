@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-    <param name="robot_description" command="$(find xacro)/xacro.py $(find custom_robot_udmey)/urdf/niryo_arm_gazebo_controller.urdf.xacro"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(find custom_robot_udmey)/urdf/niryo_arm_gazebo_controller.urdf.xacro"/>
     <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
     <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf_model" output="screen"
     args="-param robot_description -urdf -model niryo_arm"  />
     <!--<rosparam command="load" file="$(find custom_robot_udmey)/config/controller.yaml"/> -->
     <!--<node name= "controller_spawner" pkg= "controller_manager" type="spawner" args="arm_controller"/>  -->
+    <rosparam command="load" file="$(find custom_robot_udmey)/config/controller.yaml"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false"/>
+    </node>
+    <node name="joint_state_controller_spawner" pkg="controller_manager" type="spawner" args="joint_state_controller arm_controller" respawn="false" />
 </launch>

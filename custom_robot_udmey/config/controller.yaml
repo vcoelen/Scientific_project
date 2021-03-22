@@ -1,9 +1,26 @@
+
+hardware_interface:
+     loop_hz: 10 # hz
+     # CR: Here is my point, can the urdf/transmission specification be used for joint names?
+     joints:
+       - joint_1
+       - joint_2
+       - joint_3
+       - joint_4
+       - joint_5
+       - joint_6
+  # Publish all joint states ----------------------------------
+joint_state_controller:
+     type:         joint_state_controller/JointStateController
+     publish_rate: 50
+
+  # Joint Trajectory Controller -------------------------------
 arm_controller:
-  type: "position_controllers/JointTrajectoryController"
-  joints:
-    - joint_1
-    - joint_2
-    - joint_3
-    - joint_4
-    - joint_5
-    - joint_6
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+      - joint_6
